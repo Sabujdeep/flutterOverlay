@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_window/flutter_overlay_window.dart';
+import 'package:overlay_window/overlay/overlay_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,10 +22,7 @@ class OverlayScreen extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(16),
           color: Colors.blue,
-          child: const Text(
-            "Overlay Active",
-            style: TextStyle(color: Colors.white),
-          ),
+          child: const OverlayScreen1()
         ),
       ),
     );
@@ -42,7 +40,7 @@ class MyApp extends StatelessWidget {
     }
 
     await FlutterOverlayWindow.showOverlay(
-      height: 200,
+      height: 400,
       width: 200,
       enableDrag: true,
       alignment: OverlayAlignment.center,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 
-class OverlayScreen extends StatelessWidget {
-  const OverlayScreen({super.key});
+class OverlayScreen1 extends StatelessWidget {
+  const OverlayScreen1({super.key});
 
   @override
   Widget build(BuildContext context) {
