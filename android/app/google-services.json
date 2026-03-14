@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "291613454772",
+    "project_id": "overlay-window",
+    "storage_bucket": "overlay-window.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291613454772:android:dfefc1cac1d2f6553102e1",
+        "android_client_info": {
+          "package_name": "com.example.overlay_window"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-xDGIrGDsjbbBXePN6ulSvv0IKrYMVNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

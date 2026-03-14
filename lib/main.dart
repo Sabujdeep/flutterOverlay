@@ -1,12 +1,29 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:overlay_window/overlay/overlay_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AndroidAlarmManager.initialize();
 
+  await Firebase.initializeApp();
+
+  await FirebaseMessaging.instance.requestPermission();
+
+  String? token = await FirebaseMessaging.instance.getToken();
+
+  print("FCM Token: $token");
+
+  FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
+  debugPrint("New Token: $newToken");
+});
+  
   runApp(const MyApp());
 }
 
@@ -14,18 +31,14 @@ Future<void> main() async {
 @pragma("vm:entry-point")
 void overlayMain() {
   runApp(
-    const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: OverlayScreen(),
-    ),
+    const MaterialApp(debugShowCheckedModeBanner: false, home: OverlayScreen()),
   );
 }
 
 /// Alarm callback
 @pragma("vm:entry-point")
 Future<void> overlayAlarmCallback() async {
-
-    debugPrint("ALARM TRIGGERED");
+  debugPrint("ALARM TRIGGERED");
 
   await FlutterOverlayWindow.showOverlay(
     height: 400,
@@ -42,9 +55,7 @@ class OverlayScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Material(
       color: Colors.transparent,
-      child: Center(
-        child: OverlayScreen1(),
-      ),
+      child: Center(child: OverlayScreen1()),
     );
   }
 }
@@ -57,15 +68,26 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
-    scheduleOverlay();   // Automatically schedule alarm
+    scheduleOverlay(); // Automatically schedule alarm
+
+        FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      openOverlay();
+    });
+  }
+
+  void openOverlay() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => OverlayScreen(),
+      ),
+    );
   }
 
   Future<void> scheduleOverlay() async {
-
     DateTime now = DateTime.now();
 
     /// schedule 1 minute from now (testing)
